@@ -6,6 +6,8 @@ use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Support\Facades\Auth;
 
+use App\Lib\SofTeacher;
+
 class RedirectIfAuthenticated
 {
     /**
