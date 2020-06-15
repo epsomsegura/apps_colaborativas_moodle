@@ -1,7 +1,7 @@
 objFunctions = {
     data:{
         zipcode:function(){
-            $.getJSON(host+'/global/zipcode_filter/'+$('#zipcode').val())
+            $.getJSON(host+'/global/zipcodeFilter/'+$('#zipcode').val())
             .done(function(resp){
                 $('#state').val(resp[0].estado);
                 $('#county').val(resp[0].municipio);

@@ -67,7 +67,7 @@ class SofTeacher{
                 $a->action_name = self::action_name($r->method());
                 $a->action_method = $r->method();
                 $a->action_path = '/'.$r->path();
-                $a->action_params = json_encode($r->except('_token'));
+                $a->action_params = json_encode($r->except('_token','_method'));
         
                 $a->save();
                 DB::commit();
@@ -76,6 +76,31 @@ class SofTeacher{
         }
         catch(\Exception $e){
             DB::rollback();
+            return "Error: ".$e->getMessage();
         }
+    }
+
+    /**
+    * Se encarga de retornar las letras de los grupos de un instituto
+    * @access  public
+    * @param int $groups - Número de grupos por grado
+    * @return int $groups - Retorna las letras correspondientes a la cantidad de grupos de una institución
+    */
+    public static function groupLetter($groups){
+        $alphabet = range('A', 'Z');
+        $groups = array_slice($alphabet,0,$groups);
+        return $groups;
+    }
+
+    /**
+    * Se encarga de retornar las letras de los grupos de un instituto
+    * @access  public
+    * @param int $pos - Número del grupo
+    * @return String $letter - Letra asignada al número del grupo
+    */
+    public static function getGroupLetter($pos){
+        $alphabet = range('A', 'Z');
+        $letter = $alphabet[$pos-1];
+        return $letter;
     }
 }

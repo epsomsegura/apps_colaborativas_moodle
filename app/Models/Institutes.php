@@ -11,7 +11,11 @@ class Institutes extends Model
     public $timestamps = true;
 
     public function n_e(){
-        return $this->hasOne('App\Models\Education_Level','id','fk_education_level');
+        return $this->hasOne('App\Models\EducationLevels','id','fk_education_level');
+    }
+
+    public function zc_i(){
+        return $this->belongsTo('\App\Models\Zipcodes','cp','zipcode');
     }
 }
 

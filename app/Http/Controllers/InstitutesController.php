@@ -15,21 +15,21 @@ use App\Lib\SofTeacher;
 
 // Models
 use App\Models\Institutes as I;
-use App\Models\Education_Level as EL;
+use App\Models\EducationLevels as EL;
 use App\Models\Zipcodes as Z;
 
 class InstitutesController extends Controller
 {
     //
     public function index(Request $r){
-        $data['institutes'] = I::with(['n_e'])->get();
+        $data['institutes'] = I::with(['n_e'])->orderBy('name','ASC')->get();
 
         SofTeacher::ActionLog($r);
         return View('institutes.index', $data);
     }
 
     public function newInstitute(Request $r){
-        $data['el'] = EL::all();
+        $data['el'] = EL::orderBy('name','ASC')->get();
 
         SofTeacher::ActionLog($r);
         return View('institutes.create',$data);
@@ -58,7 +58,7 @@ class InstitutesController extends Controller
         $id = Crypt::decrypt($id);
         try{
             $data['i'] = I::findOrFail($id);
-            $data['el'] = EL::all();
+            $data['el'] = EL::orderBy('name','ASC')->get();
             $data['suburb'] = Z::Where('cp',$data['i']->zipcode)->get();
             return View('institutes.edit',$data);
         }
@@ -83,7 +83,7 @@ class InstitutesController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            return \Redirect::back()->withErrors(['danger','Error','No se pudo actualizar el registro, contacte a soporte técnico'.$e->getMessage()]);
+            return \Redirect::back()->withErrors(['danger','Error','No se pudo actualizar el registro, contacte a soporte técnico']);
         }
     }
 
@@ -102,7 +102,41 @@ class InstitutesController extends Controller
         }
         catch(\Exception $e){
             DB::rollback();
-            return \Redirect::back()->withErrors(['danger','Error','No se pudo eliminar el registro, contacte a soporte técnico'.$e->getMessage()]);
+            return \Redirect::back()->withErrors(['danger','Error','No se pudo eliminar el registro, contacte a soporte técnico']);
+        }
+    }
+
+
+    public function myInstitute(Request $r){
+        SofTeacher::ActionLog($r);
+        try{
+            $data['i'] = I::With(['n_e'])->Where('id',Auth::user()->fk_institute)->first();
+            $data['el'] = EL::orderBy('name','ASC')->get();
+            $data['suburb'] = Z::Where('cp',$data['i']->zipcode)->get();
+            return View('institutes.my_institute',$data);
+        }
+        catch(\Exception $e){
+            return \Redirect::To('/home')->withErrors(['danger','Error','El registro que busca no existe']);
+        }
+
+    }
+    
+    public function saveMyInstitute(Request $r){
+        SofTeacher::ActionLog($r);
+        $action_id=SofTeacher::ActionLog($r);
+        
+        $data = $r->except('_token','_method');
+        $data['action_id'] = $action_id;
+
+        DB::BeginTransaction();
+        try{
+            I::Where('id',Auth::user()->fk_institute)->update($data);
+            DB::commit();
+            return \Redirect::To('/institutes/myInstitute');
+        }
+        catch(\Exception $e){
+            DB::rollback();
+            return \Redirect::back()->withErrors(['danger','Error','No se pudo actualizar el registro, contacte a soporte técnico']);
         }
     }
 }
