@@ -53,7 +53,10 @@ $alphabet = range('A','Z');
                     <td class="text-center">{{$i->start}}</td>
                     <td class="text-center">{{$i->end}}</td>
                     <td class="text-center">{{$i->status == 1 ? 'Abierta' : 'Cerrada'}}</td>
-                    <td class="text-center"></td>
+                    <td class="text-center">
+                        <a href="{{url('/activities/'.Crypt::encrypt($i->id))}}" class="text-primary" title="Editar"><i class="fas fa-edit"></i></a>
+                        <a href="{{url('/activities/scores/'.Crypt::encrypt($i->id))}}" class="text-dark" title="Revisar"><i class="fas fa-check"></i></a>
+                    </td>
                 </tr>
 
                 @endforeach

@@ -10,6 +10,8 @@ class Activities extends Model
     protected $table = 'activities';
     public $timestamps = true;
 
+    protected $fillable = ['fk_institute'];
+
     public function a_i(){
         return $this->hasOne('\App\Models\Institutes','id','fk_institute');
     }

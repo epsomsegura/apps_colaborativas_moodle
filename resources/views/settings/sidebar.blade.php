@@ -98,26 +98,12 @@
                     Mis materias
                 </a>
                 @endif
-                @if(in_array(Auth::user()->fk_role,[1,2,3]))
+                @if(in_array(Auth::user()->fk_role,[1,2,3,5]))
                 <a class="nav-link" href="{{url('/activities/')}}">
                     <div class="sb-nav-link-icon"><i class="far fa-file"></i></div>
                     Mis actividades
                 </a>
                 @endif
-
-
-
-
-
-                <div class="sb-sidenav-menu-heading">Addons</div>
-                <a class="nav-link" href="charts.html">
-                    <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
-                    Charts
-                </a>
-                <a class="nav-link" href="tables.html">
-                    <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
-                    Tables
-                </a>
             </div>
         </div>
         <div class="sb-sidenav-footer">

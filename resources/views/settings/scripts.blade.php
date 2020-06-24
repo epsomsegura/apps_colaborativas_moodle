@@ -5,4 +5,7 @@
 <script src="{{asset('assets/js/chart.min.js')}}"></script>
 <script src="{{asset('assets/js/jquery.dataTables.min.js')}}"></script>
 <script src="{{asset('assets/js/dataTables.bootstrap4.min.js')}}"></script>
+<script src="{{asset('assets/js/moment.min.js')}}"></script>
+<script src="{{asset('assets/js/moment-with-locales.min.js')}}"></script>
+<script src="{{asset('assets/js/daterangepicker.min.js')}}"></script>
 

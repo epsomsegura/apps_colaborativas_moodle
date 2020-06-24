@@ -182,6 +182,11 @@ Route::group(['prefix'=>'profiles','middleware'=>['auth']],function(){
 Route::group(['prefix'=>'activities','middleware'=>['auth']],function(){
     Route::get('/','ActivitiesController@index');
     Route::get('/new','ActivitiesController@newActivity');
+    Route::post('/new','ActivitiesController@saveActivity');
+    Route::get('/scores/{id}','ActivitiesController@scoresActivity');
+    Route::post('/scores/{id}','ActivitiesController@saveScoresActivity');
+    Route::get('/send/{id}','ActivitiesController@sendActivity');
+    Route::post('/send/{id}','ActivitiesController@saveSendActivity');
 });
 
 // Auth::routes();
